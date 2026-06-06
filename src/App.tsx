@@ -4,13 +4,16 @@ import './App.css'
 // import { TransactionItem } from './components/TransactionItem'
 import { sampleTransactions } from './data'
 import TransactionList from "./components/TransactionList.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import type {Transaction} from "./types.ts";
 import TransactionForm from "./components/TransactionForm.tsx";
 import Summary from "./components/Summary.tsx";
 
 function App() {
-    const [transactions, setTransactions] = useState<Transaction[]>(sampleTransactions)
+    const [transactions, setTransactions] = useState<Transaction[]>(() => {
+        const saved = localStorage.getItem('transactions')
+        return saved ? JSON.parse(saved) : sampleTransactions
+    })
     const [filter, setFilter] = useState<'all' | 'income' | 'expense'>('all')
 
     const visibleTransactions =
@@ -25,6 +28,10 @@ function App() {
     function handleDelete(id: string) {
         setTransactions(prev => prev.filter(t => t.id !== id))
     }
+
+    useEffect(() => {
+        localStorage.setItem('transactions', JSON.stringify(transactions))
+    }, [transactions]);
 
     return (
         <div className="app">
