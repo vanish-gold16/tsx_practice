@@ -4,21 +4,33 @@ import './App.css'
 // import { TransactionItem } from './components/TransactionItem'
 import { sampleTransactions } from './data'
 import TransactionList from "./components/TransactionList.tsx";
+import {useState} from "react";
+import type {Transaction} from "./types.ts";
+import TransactionForm from "./components/TransactionForm.tsx";
 
 function App() {
-  return (
-    <div className="app">
-      <header className="app__header">
-        <h1>💰 Мои финансы</h1>
-        <p className="app__subtitle">Простой трекер доходов и расходов</p>
-      </header>
+    const [transactions, setTransactions] = useState<Transaction[]>(sampleTransactions)
 
-      <main className="app__main">
-          <TransactionList
-              transactions={sampleTransactions} />
-      </main>
-    </div>
-  )
+    function handleAdd(transaction: Transaction) {
+        setTransactions(prev => [transaction, ...prev])
+    }
+
+    return (
+        <div className="app">
+            <header className="app__header">
+                <h1>💰 Мои финансы</h1>
+                <p className="app__subtitle">Простой трекер доходов и расходов</p>
+            </header>
+
+        <main className="app__main">
+            <TransactionList
+                transactions={transactions} />
+            <TransactionForm
+                onAdd={handleAdd}
+            />
+        </main>
+        </div>
+    )
 }
 
 export default App
