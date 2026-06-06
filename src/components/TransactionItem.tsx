@@ -10,12 +10,13 @@ import type { Transaction } from '../types'
 // Их обязательно типизируем: TransactionItem ДОЛЖЕН получить объект transaction.
 // Если забудешь его передать — TypeScript подсветит ошибку ещё до запуска.
 interface TransactionItemProps {
-  transaction: Transaction
+  transaction: Transaction,
+  onDelete: (id: string) => void,
 }
 
 // Компонент — это функция, которая возвращает JSX (разметку).
 // { transaction } — деструктуризация: достаём поле transaction из объекта пропсов.
-export function TransactionItem({ transaction }: TransactionItemProps) {
+export function TransactionItem({ transaction, onDelete }: TransactionItemProps) {
   const { title, amount, type } = transaction
 
   // Производные значения считаем прямо в теле компонента — это обычные переменные.
@@ -31,6 +32,13 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
         {sign}
         {amount.toLocaleString('ru-RU')} ₽
       </span>
+        <button
+            type="button"
+            className="transaction__delete"
+            onClick={() => onDelete(transaction.id)}
+        >
+            x
+        </button>
     </li>
   )
 }

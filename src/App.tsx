@@ -11,9 +11,19 @@ import Summary from "./components/Summary.tsx";
 
 function App() {
     const [transactions, setTransactions] = useState<Transaction[]>(sampleTransactions)
+    const [filter, setFilter] = useState<'all' | 'income' | 'expense'>('all')
+
+    const visibleTransactions =
+        filter === 'all'
+            ? transactions
+            :transactions.filter(t => t.type === filter)
 
     function handleAdd(transaction: Transaction) {
         setTransactions(prev => [transaction, ...prev])
+    }
+
+    function handleDelete(id: string) {
+        setTransactions(prev => prev.filter(t => t.id !== id))
     }
 
     return (
@@ -24,9 +34,33 @@ function App() {
             </header>
 
         <main className="app__main">
+            <div
+                className="filter"
+            >
+                <button
+                    className={filter === 'all' ? 'is-active' : ''}
+                    onClick={() => setFilter('all')}
+                >
+                    Все
+                </button>
+                <button
+                    className={filter === 'income' ? 'is-active' : ''}
+                    onClick={() => setFilter('income')}
+                >
+                    Доходы
+                </button>
+                <button
+                    className={filter === 'expense' ? 'is-active' : ''}
+                    onClick={() => setFilter('expense')}
+                >
+                    Расходы
+                </button>
+            </div>
             <Summary transactions={transactions} />
             <TransactionList
-                transactions={transactions} />
+                transactions={visibleTransactions}
+                onDelete={handleDelete}
+            />
             <TransactionForm
                 onAdd={handleAdd}
             />

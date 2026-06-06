@@ -109,6 +109,8 @@ code {
 
 .transaction__title {
   font-weight: 500;
+  flex: 1; /* занять всё свободное место и прижать сумму + кнопку вправо */
+  min-width: 0;
 }
 
 .transaction__amount {
