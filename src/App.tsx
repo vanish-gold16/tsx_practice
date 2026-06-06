@@ -7,6 +7,7 @@ import TransactionList from "./components/TransactionList.tsx";
 import {useState} from "react";
 import type {Transaction} from "./types.ts";
 import TransactionForm from "./components/TransactionForm.tsx";
+import Summary from "./components/Summary.tsx";
 
 function App() {
     const [transactions, setTransactions] = useState<Transaction[]>(sampleTransactions)
@@ -23,6 +24,7 @@ function App() {
             </header>
 
         <main className="app__main">
+            <Summary transactions={transactions} />
             <TransactionList
                 transactions={transactions} />
             <TransactionForm
