@@ -2,7 +2,8 @@ import './App.css'
 // Пока импортируем образец и тестовые данные — пригодятся на Этапе 1.
 // По мере выполнения задания ты добавишь сюда свои компоненты и состояние.
 // import { TransactionItem } from './components/TransactionItem'
-// import { sampleTransactions } from './data'
+import { sampleTransactions } from './data'
+import TransactionList from "./components/TransactionList.tsx";
 
 function App() {
   return (
@@ -13,18 +14,8 @@ function App() {
       </header>
 
       <main className="app__main">
-        {/*
-          ┌─────────────────────────────────────────────────────────────┐
-          │  ЗДЕСЬ ТЫ БУДЕШЬ СТРОИТЬ ПРИЛОЖЕНИЕ.                          │
-          │                                                              │
-          │  Открой README.md — там пошаговое задание. Начни с «Этап 1»: │
-          │  вывести список операций из sampleTransactions, используя    │
-          │  компонент TransactionItem как образец.                      │
-          └─────────────────────────────────────────────────────────────┘
-        */}
-        <p className="placeholder">
-          Тут пока пусто. Загляни в <code>README.md</code> и начни с «Этап&nbsp;1».
-        </p>
+          <TransactionList
+              transactions={sampleTransactions} />
       </main>
     </div>
   )
